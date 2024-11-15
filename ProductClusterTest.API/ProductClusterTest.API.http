@@ -1,0 +1,6 @@
+@ProductClusterTest.API_HostAddress = http://localhost:5145
+
+GET {{ProductClusterTest.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
