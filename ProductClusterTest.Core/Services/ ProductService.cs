@@ -11,12 +11,6 @@ namespace ProductClusterTest.Core.Services
         {
             _repository = repository;
         }
-  
-        public async Task<IEnumerable<Product>> GetAllAsync()
-        {
-            return await _repository.GetAllAsync();
-        }
-
 
         public async Task<IEnumerable<Product>> GetByPriceAsync(decimal price)
         {

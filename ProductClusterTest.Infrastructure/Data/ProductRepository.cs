@@ -14,10 +14,6 @@ namespace ProductClusterTest.Infrastructure.Data
             _context = context;
         }
        
-        public async Task<IEnumerable<Product>> GetAllAsync()
-        {
-            return await _context.Products.Find(_ => true).ToListAsync();
-        }
         public async Task<IEnumerable<Product>> GetByPriceAsync(decimal price)
         {
             return await _context.Products

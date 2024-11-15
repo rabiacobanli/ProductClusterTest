@@ -9,26 +9,13 @@ const ProductManagement = () => {
     const [searchPrice, setSearchPrice] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const fetchAllProducts = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get(`${API_URL}`);
-            setProducts(response.data);
-        } catch (error) {
-            console.error('Error fetching all products:', error);
-            alert('Error fetching products');
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const fetchProductsByPrice = async (price) => {
         try {
             setLoading(true);
             const response = await axios.get(`${API_URL}/${price}`);
             setProducts(response.data);
         } catch (error) {
-            console.error('Error fetching products by price:', error);
+            console.error('Error fetching products:', error);
             alert('Error fetching products');
         } finally {
             setLoading(false);
@@ -39,18 +26,21 @@ const ProductManagement = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const productData = {
+            const response = await axios.post(API_URL, {
                 name: newProduct.name,
-                price: parseFloat(newProduct.price)
-            };
+                price: parseFloat(newProduct.price),
+            });
 
-            await axios.post(API_URL, productData);
+            console.log('Response:', response.data);
+
             setNewProduct({ name: '', price: '' });
-            await fetchAllProducts(); 
-            alert('Product added successfully!');
+            if (searchPrice) {
+                fetchProductsByPrice(searchPrice);
+            }
+            alert('Product added successfully');
         } catch (error) {
-            console.log('Error:', error.response?.data);
-            alert('Failed to add product');
+            console.error('Error details:', error);
+            alert('Error adding product');
         } finally {
             setLoading(false);
         }
@@ -59,9 +49,7 @@ const ProductManagement = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchPrice) {
-            fetchProductsByPrice(searchPrice); 
-        } else {
-            fetchAllProducts(); 
+            fetchProductsByPrice(searchPrice);
         }
     };
 
@@ -156,5 +144,6 @@ const ProductManagement = () => {
         </div>
     );
 };
+
 
 export default ProductManagement;

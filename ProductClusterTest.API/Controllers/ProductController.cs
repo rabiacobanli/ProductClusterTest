@@ -15,20 +15,6 @@ namespace ProductClusterTest.API.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
-        {
-            try
-            {
-                var products = await _productService.GetAllAsync();
-                return Ok(products);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
         [HttpGet("{price}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetByPrice(decimal price)
         {
